@@ -2,10 +2,10 @@ import uuid
 
 import structlog
 
+from corelated_logs.constants import HTTP_REQUEST_HEADER
+
 
 class DjangoCorelationMiddleware(object):
-    CORELATED_HEADER = "HTTP_X_CO_REQUEST_ID"
-
     def __init__(self, get_response):
         self.get_response = get_response
         structlog.configure(
@@ -21,8 +21,8 @@ class DjangoCorelationMiddleware(object):
     def __call__(self, request):
 
         logger = structlog.getLogger()
-        if request.META.get(self.CORELATED_HEADER):
-            current_request_id = request.META.get(self.CORELATED_HEADER)
+        if request.META.get(HTTP_REQUEST_HEADER):
+            current_request_id = request.META.get(HTTP_REQUEST_HEADER)
 
         else:
             current_request_id = str(uuid.uuid4())

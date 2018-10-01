@@ -2,13 +2,13 @@ import uuid
 
 import structlog
 
+from corelated_logs.constants import HTTP_REQUEST_HEADER
+
 
 class FlaskCorelationMiddleWare(object):
     """
     It uses structlog to maintain request_id
     """
-
-    CORELATED_HEADER = "HTTP_X_CO_REQUEST_ID"
 
     def __init__(self, app):
         self.app = app
@@ -25,8 +25,8 @@ class FlaskCorelationMiddleWare(object):
     def __call__(self, environ, start_response):
 
         logger = structlog.getLogger()
-        if self.CORELATED_HEADER in environ:
-            current_request_id = environ[self.CORELATED_HEADER]
+        if HTTP_REQUEST_HEADER in environ:
+            current_request_id = environ[HTTP_REQUEST_HEADER]
 
         else:
             current_request_id = str(uuid.uuid4())
