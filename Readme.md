@@ -18,8 +18,8 @@ app.wsgi_app = FlaskCorelationMiddleWare(app.wsgi_app)
 patch(['requests','kombu'])  #for celery path kombu
 ```
 
+###### See structlog documentation if you want ot customize your logger
 Replace you logger with structlog :
-
 Previously:
 ```
 logger = logging.getLogger()
@@ -55,9 +55,6 @@ def process_message(body, message):
   message.ack()
 
 ```
-
-
-
 
 
 
