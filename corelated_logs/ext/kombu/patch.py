@@ -4,6 +4,8 @@ import structlog
 import wrapt
 import uuid
 
+from corelated_logs.ext import constants
+
 logger = logging.getLogger()
 
 
@@ -18,10 +20,10 @@ def _inject_header(wrapped, instance, args, kwargs):
         headers = {}
 
     try:
-        headers["X_CO_REQUEST_ID"] = str(
+        headers[constants.REQUEST_HEADER] = str(
             structlog.get_config()["context_class"]._tl.dict_["request_id"]
         )
     except Exception as e:
-        headers["X_CO_REQUEST_ID"] = str(uuid.uuid4())
+        headers[constants.REQUEST_HEADER] = str(uuid.uuid4())
     kwargs["headers"] = headers
     return wrapped(*args, **kwargs)
