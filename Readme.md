@@ -10,12 +10,12 @@ It works in three step
 
 
 ##### Examples:
-Add Corelation middleware and patch outgoing request module
+Add Corelation middleware and patch outgoing request modules
 For Flask
 ```
 app = Flask(__name__)
 app.wsgi_app = FlaskCorelationMiddleWare(app.wsgi_app)
-patch(['requests','kombu'])  #for celery path kombu
+patch(['requests','kombu'])  #for celery patch kombu
 ```
 
 ###### See structlog documentation if you want ot customize your logger
