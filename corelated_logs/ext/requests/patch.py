@@ -25,4 +25,4 @@ def inject_request_id_header(headers):
             structlog.get_config()["context_class"]._tl.dict_["request_id"]
         )
     except Exception as e:
-        headers["X_CO_REQUEST_ID"] = str(uuid.uuid())
+        headers["X_CO_REQUEST_ID"] = str(uuid.uuid4())
