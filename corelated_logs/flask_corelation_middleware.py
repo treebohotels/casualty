@@ -29,6 +29,6 @@ class CorelationMiddleWare(object):
             current_request_id = environ[self.CORELATED_HEADER]
 
         else:
-            current_request_id = uuid.uuid4()
+            current_request_id = str(uuid.uuid4())
         logger = logger.bind(request_id=current_request_id)
         return self.app(environ, start_response)
