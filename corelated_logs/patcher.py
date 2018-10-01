@@ -1,10 +1,10 @@
-import logging
 import importlib
+import logging
 
 log = logging.getLogger(__name__)
 
 SUPPORTED_MODULES = (
-  'requests','kombu'
+    'requests', 'kombu'
 )
 
 NO_DOUBLE_PATCH = (
@@ -50,7 +50,6 @@ def _patch_module(module_to_patch, raise_errors=True):
 
 
 def _patch(module_to_patch):
-
     path = 'corelated_logs.ext.%s' % module_to_patch
 
     if module_to_patch in _PATCHED_MODULES:

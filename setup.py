@@ -1,7 +1,5 @@
 from setuptools import setup, find_packages
 
-
-
 setup(
     name='corelated_logs',
     version='0.0.5',
