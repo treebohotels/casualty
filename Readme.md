@@ -3,7 +3,7 @@ In microservices world we need a common request id to tie all log events togethe
 
 ##### Lets see how it works
 It works in three step
--   Use middleware to add request id header to all incoming request if it is not there
+-   Use middleware to add request_id(X_CO_REQUEST_ID) header to all incoming request if it is not there
 -   Use structlog https://github.com/hynek/structlog to bind the request_id to logger ,so that request_id is present in each log record
 -   Patch functions at runtime to add request_id header  to all outgoing request (celery,kombu,request)
 
