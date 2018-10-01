@@ -10,4 +10,54 @@ It works in three step
 
 
 ##### Examples:
-###### Flask
+Add Corelation middleware and patch outgoing request module
+For Flask
+```
+app = Flask(__name__)
+app.wsgi_app = FlaskCorelationMiddleWare(app.wsgi_app)
+patch(['requests','kombu'])  #for celery path kombu
+```
+
+Replace you logger with structlog :
+
+Previously:
+```
+logger = logging.getLogger()
+logger.setLevel(INFO)
+logger.addHandler(StreamHandler())
+```
+Now:
+```
+logger = logging.getLogger()
+logger.setLevel(INFO)
+logger.addHandler(StreamHandler())
+logger = structlog.wrap_logger(logger=logger)
+```
+
+This will automaticaly start adding request_id to your logs and and header to all outbounf request.
+
+For celery consumer, bind request_id like this
+```
+logger = structlog.wrap_logger(logger=logger)
+@app.task(bind=True) # bind the task
+def add(self,x, y):
+    logger = logger.bind(request_id=self.request.X_CO_REQUEST_ID)
+
+    return x,y
+```
+
+For kombu consumer tie request_id like this
+```
+logger = structlog.wrap_logger(logger=logger)
+def process_message(body, message):
+  print("The body is {}".format(body))
+  logger = logger.bind(request_id=message.headers['X_CO_REQUEST_ID'])
+  message.ack()
+
+```
+
+
+
+
+
+
