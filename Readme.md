@@ -1,5 +1,5 @@
 # Corelated logs
-In microservices world we need a common request id to tie all log events together so that we can retrieve nessesary information from logs ,this libraray help to set and log request-id on  for requests and propgat it to all other outbound request (celery,kombu ,other http request)
+In microservices world we need a common request id to tie all log events together so that we can retrieve nessesary information from logs ,this libraray help to set and log request-id  for a given request and propgat it to all other outbound request (celery,kombu ,other http request)
 
 ##### Lets see how it works
 It works in three step
