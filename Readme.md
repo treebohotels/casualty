@@ -19,18 +19,15 @@ patch(['requests','kombu'])  #patch kombu if you are using celery
 ```
 
 ###### See structlog documentation if you want ot customize your logger
-Replace you logger with structlog logger:
+Replace you logger with structlog logger in all files :
 Previously:
 ```
 logger = logging.getLogger()
-logger.setLevel(INFO)
-logger.addHandler(StreamHandler())
+
 ```
 Now:
 ```
 logger = logging.getLogger()
-logger.setLevel(INFO)
-logger.addHandler(StreamHandler())
 logger = structlog.wrap_logger(logger=logger)
 ```
 
