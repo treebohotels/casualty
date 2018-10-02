@@ -15,11 +15,11 @@ For Flask
 ```
 app = Flask(__name__)
 app.wsgi_app = FlaskCorelationMiddleWare(app.wsgi_app)
-patch(['requests','kombu'])  #for celery patch kombu
+patch(['requests','kombu'])  #patch kombu if you are using celery 
 ```
 
 ###### See structlog documentation if you want ot customize your logger
-Replace you logger with structlog :
+Replace you logger with structlog logger:
 Previously:
 ```
 logger = logging.getLogger()
@@ -34,27 +34,55 @@ logger.addHandler(StreamHandler())
 logger = structlog.wrap_logger(logger=logger)
 ```
 
-This will automaticaly start adding request_id to your logs and and header to all outbounf request.
+This will automaticaly start adding request_id to your logs and and header to all outbound request.
 
-For celery consumer, bind request_id like this
+For kombu consumer patch kombu and use structlog as below
 ```
+from corelated_logs.patcher import patch 
+patch(['requests','kombu']) 
+```
+
+```
+logger=logging.getLogger()
+logger = structlog.wrap_logger(logger=logger)
+def process_message(body, message):
+  print("The body is {}".format(body))
+  logger = logger.info('message')
+  message.ack()
+
+```
+
+
+
+For celery consumer,note that we need to initailize structlog as well,and  bind request_id 
+
+```
+from corelated_logs.patcher import patch 
+patch(['requests','kombu']) 
+```
+
+```
+structlog.configure(
+        processors=[
+            structlog.processors.TimeStamper(fmt="ISO"),
+            structlog.processors.JSONRenderer(),
+        ],
+        context_class=structlog.threadlocal.wrap_dict(dict),
+        wrapper_class=structlog.stdlib.BoundLogger,
+        cache_logger_on_first_use=True,
+    )
+    
+
+logger=logging.getLogger()
 logger = structlog.wrap_logger(logger=logger)
 @app.task(bind=True) # bind the task
 def add(self,x, y):
-    logger = logger.bind(request_id=self.request.X_CO_REQUEST_ID)
+    global logger
+    logger = logger.bind(request_id=self.request.__dict__[REQUEST_HEADER])
 
     return x,y
 ```
 
-For kombu consumer tie request_id like this
-```
-logger = structlog.wrap_logger(logger=logger)
-def process_message(body, message):
-  print("The body is {}".format(body))
-  logger = logger.bind(request_id=message.headers['X_CO_REQUEST_ID'])
-  message.ack()
-
-```
 
 
 
