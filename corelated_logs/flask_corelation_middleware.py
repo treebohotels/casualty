@@ -7,6 +7,8 @@ from corelated_logs.constants import HTTP_REQUEST_HEADER
 
 class FlaskCorelationMiddleWare(object):
     """
+    If request_id header is present bind it to logger
+    else create an ew request_id and bind it to logger
     It uses structlog to maintain request_id
     """
 
@@ -23,6 +25,12 @@ class FlaskCorelationMiddleWare(object):
         )
 
     def __call__(self, environ, start_response):
+
+        """
+        :param environ:
+        :param start_response:
+        :return:
+        """
 
         logger = structlog.getLogger()
         if HTTP_REQUEST_HEADER in environ:

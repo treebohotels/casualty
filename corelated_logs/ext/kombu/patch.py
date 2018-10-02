@@ -1,9 +1,9 @@
 import logging
+import json
 
 import structlog
 import wrapt
 import uuid
-import json
 
 from corelated_logs import constants
 
@@ -16,9 +16,7 @@ def patch():
         "kombu", "messaging.Consumer.__init__", _initialize_structlog_configuration
     )
     wrapt.wrap_function_wrapper(
-        "kombu",
-        "messaging.Consumer._receive_callback",
-        _bind_request_id_on_message_recieve,
+        "kombu", "messaging.Consumer.receive", _bind_request_id_on_message_recieve
     )
 
 
@@ -57,12 +55,6 @@ def _initialize_structlog_configuration(wrapped, instance, args, kwargs):
 
 
 def _bind_request_id_on_message_recieve(wrapped, instance, args, kwargs):
-
-    try:
-        if json.loads(args[0].body)["type"] == "worker-heartbeat":
-            return wrapped(*args, **kwargs)
-    except Exception as e:
-        pass
 
     logger = structlog.getLogger()
     try:

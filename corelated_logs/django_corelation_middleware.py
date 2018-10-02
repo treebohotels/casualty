@@ -6,6 +6,12 @@ from corelated_logs.constants import HTTP_REQUEST_HEADER
 
 
 class DjangoCorelationMiddleware(object):
+    """
+    If request_id header is present bind it to logger
+    else create an ew request_id and bind it to logger
+    It uses
+    """
+
     def __init__(self, get_response):
         self.get_response = get_response
         structlog.configure(

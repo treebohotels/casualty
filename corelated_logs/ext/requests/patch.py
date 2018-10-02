@@ -14,6 +14,16 @@ def patch():
 
 
 def _inject_header(wrapped, instance, args, kwargs):
+    """
+
+    Add request_id header to all outgoing http request
+
+    :param wrapped:
+    :param instance:
+    :param args:
+    :param kwargs:
+    :return:
+    """
     request = args[0]
     headers = getattr(request, "headers", {})
     inject_request_id_header(headers)
