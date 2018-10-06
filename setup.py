@@ -10,6 +10,7 @@ setup(
         "pre-commit-hooks==1.4.0",
         "pytest",
         "pytest-cov",
+        "codecov",
         "black",
     ],
     url="",
