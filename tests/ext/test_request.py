@@ -1,2 +1,2 @@
 def test_patch():
-    pass
+    assert True

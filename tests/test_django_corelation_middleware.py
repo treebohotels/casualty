@@ -19,3 +19,7 @@
 #     DjangoCorelationMiddleware().process_request(request)
 #
 #     print(123)
+
+
+def test_patch():
+    assert True
