@@ -1,4 +1,11 @@
 # Casualty - Logging with request identifiers
+[![image](https://img.shields.io/pypi/v/casualty.svg)](https://pypi.org/project/casualty/)
+[![image](https://img.shields.io/pypi/l/casualty.svg)](https://pypi.org/project/casualty/)
+[![image](https://img.shields.io/github/contributors/treebohotels/casualty.svg)](https://github.com/treebohotels/casualty/graphs/contributors)
+[![codecov.io](https://codecov.io/github/treebohotels/casualty/coverage.svg?branch=master)](https://codecov.io/github/treebohotels/casualty)
+
+
+
 Tracing a request from start to end is critical for diagnosing issues quickly. This becomes hard when you have a highly
 concurrent system because logs are interspersed with each other. It becomes even harder when you are in the microservices
 architecture where a request may travel through multiple services before being complete. 
@@ -97,7 +104,5 @@ def add(self,x, y):
     logger = logger.bind(request_id=self.request.__dict__[REQUEST_HEADER])
     return x,y
 ```
-
-
 
 

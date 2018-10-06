@@ -1,4 +1,4 @@
-from setuptools import setup, find_packages
+from setuptools import find_packages, setup
 
 setup(
     name="casualty",
@@ -11,7 +11,7 @@ setup(
         "black",
     ],
     url="",
-    license="BSD",
+    license="MIT",
     author="Sohit Kumar",
     author_email="sumitk002@gmail.com",
     test_suite="tests",
