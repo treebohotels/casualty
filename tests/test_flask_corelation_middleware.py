@@ -1,6 +1,6 @@
 # from mock import Mock
 #
-# from corelated_logs.flask_corelation_middleware import FlaskCorelationMiddleWare
+# from casualty.flask_corelation_middleware import FlaskCorelationMiddleWare
 #
 #
 # def test_flask_corelation_middleware(self):

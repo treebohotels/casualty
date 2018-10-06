@@ -4,7 +4,7 @@ import uuid
 import structlog
 import wrapt
 
-from corelated_logs import constants
+from casualty import constants
 
 logger = logging.getLogger()
 

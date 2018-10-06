@@ -2,18 +2,18 @@ import uuid
 
 import structlog
 
-from corelated_logs.constants import HTTP_REQUEST_HEADER
+from casualty.constants import HTTP_REQUEST_HEADER
 
 
-class FlaskCorelationMiddleWare(object):
+class DjangoCorelationMiddleware(object):
     """
     If request_id header is present bind it to logger
     else create an ew request_id and bind it to logger
-    It uses structlog to maintain request_id
+    It uses
     """
 
-    def __init__(self, app):
-        self.app = app
+    def __init__(self, get_response):
+        self.get_response = get_response
         structlog.configure(
             processors=[
                 structlog.processors.TimeStamper(fmt="ISO"),
@@ -24,19 +24,16 @@ class FlaskCorelationMiddleWare(object):
             cache_logger_on_first_use=True,
         )
 
-    def __call__(self, environ, start_response):
-
-        """
-        :param environ:
-        :param start_response:
-        :return:
-        """
+    def __call__(self, request):
 
         logger = structlog.getLogger()
-        if HTTP_REQUEST_HEADER in environ:
-            current_request_id = environ[HTTP_REQUEST_HEADER]
+        if request.META.get(HTTP_REQUEST_HEADER):
+            current_request_id = request.META.get(HTTP_REQUEST_HEADER)
 
         else:
             current_request_id = str(uuid.uuid4())
         logger = logger.bind(request_id=current_request_id)
-        return self.app(environ, start_response)
+
+        response = self.get_response(request)
+
+        return response

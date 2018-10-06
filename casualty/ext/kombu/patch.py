@@ -1,11 +1,10 @@
 import logging
-import json
 
 import structlog
 import wrapt
 import uuid
 
-from corelated_logs import constants
+from casualty import constants
 
 logger = logging.getLogger()
 
@@ -16,12 +15,11 @@ def patch():
         "kombu", "messaging.Consumer.__init__", _initialize_structlog_configuration
     )
     wrapt.wrap_function_wrapper(
-        "kombu", "messaging.Consumer.receive", _bind_request_id_on_message_recieve
+        "kombu", "messaging.Consumer.receive", _bind_request_id_on_message_receive
     )
 
 
 def _inject_header(wrapped, instance, args, kwargs):
-
     if "type" in args[0] and args[0]["type"] == "worker-heartbeat":
         return wrapped(*args, **kwargs)
 
@@ -54,8 +52,7 @@ def _initialize_structlog_configuration(wrapped, instance, args, kwargs):
     return wrapped(*args, **kwargs)
 
 
-def _bind_request_id_on_message_recieve(wrapped, instance, args, kwargs):
-
+def _bind_request_id_on_message_receive(wrapped, instance, args, kwargs):
     logger = structlog.getLogger()
     try:
         request_id = args[1].headers[constants.REQUEST_HEADER]

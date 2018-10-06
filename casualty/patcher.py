@@ -3,18 +3,16 @@ import logging
 
 log = logging.getLogger(__name__)
 
-SUPPORTED_MODULES = (
-    'requests', 'kombu'
-)
+SUPPORTED_MODULES = ("requests", "kombu")
 
 NO_DOUBLE_PATCH = (
-    'botocore',
-    'pynamodb',
-    'requests',
-    'sqlite3',
-    'mysql',
-    'pymongo',
-    'psycopg2',
+    "botocore",
+    "pynamodb",
+    "requests",
+    "sqlite3",
+    "mysql",
+    "pymongo",
+    "psycopg2",
 )
 
 _PATCHED_MODULES = set()
@@ -33,8 +31,10 @@ def patch(modules_to_patch, raise_errors=True):
         modules.add(module_to_patch)
     unsupported_modules = modules - set(SUPPORTED_MODULES)
     if unsupported_modules:
-        raise Exception('modules %s are currently not supported for patching'
-                        % ', '.join(unsupported_modules))
+        raise Exception(
+            "modules %s are currently not supported for patching"
+            % ", ".join(unsupported_modules)
+        )
 
     for m in modules:
         _patch_module(m, raise_errors)
@@ -46,17 +46,17 @@ def _patch_module(module_to_patch, raise_errors=True):
     except Exception:
         if raise_errors:
             raise
-        log.debug('failed to patch module %s', module_to_patch)
+        log.debug("failed to patch module %s", module_to_patch)
 
 
 def _patch(module_to_patch):
-    path = 'corelated_logs.ext.%s' % module_to_patch
+    path = "casualty.ext.%s" % module_to_patch
 
     if module_to_patch in _PATCHED_MODULES:
-        log.debug('%s already patched', module_to_patch)
+        log.debug("%s already patched", module_to_patch)
 
     imported_module = importlib.import_module(path)
     imported_module.patch()
 
     _PATCHED_MODULES.add(module_to_patch)
-    log.info('successfully patched module %s', module_to_patch)
+    log.info("successfully patched module %s", module_to_patch)

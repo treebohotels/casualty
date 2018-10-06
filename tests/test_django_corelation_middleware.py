@@ -1,4 +1,4 @@
-# from corelated_logs.django_corelation_middleware import DjangoCorelationMiddleware
+# from casualty.django_corelation_middleware import DjangoCorelationMiddleware
 # from mock import Mock
 #
 # def test_flask_corelation_middleware(self):
