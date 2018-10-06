@@ -9,7 +9,8 @@ you log something from your python code base. It also propagates the id to outbo
 a X_CO_REQUEST_ID set in its headers, it reuses it. Hence, using Casualty, you can stitch together requests from start 
 to end through multiple services.
 
-Casualty supports: Django, Flask, Requests, Celery & Kombu. 
+##### Library support
+Django, Flask, Requests, Celery & Kombu. 
 
 ##### How it works
 Three simple steps
