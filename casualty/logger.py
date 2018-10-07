@@ -3,8 +3,9 @@ import logging
 import structlog
 
 
-def getLogger(name=None):
-    logger = logging.getLogger(name)
+def getLogger(logger=None):
+    if not logger:
+        logger = logging.getLogger()
 
     if not structlog.is_configured():
         structlog.configure(

@@ -1,8 +1,8 @@
 import logging
+import uuid
 
 import structlog
 import wrapt
-import uuid
 
 from casualty import constants
 

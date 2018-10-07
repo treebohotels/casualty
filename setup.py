@@ -8,7 +8,9 @@ setup(
         "structlog==18.2.0",
         "wrapt==1.10.11",
         "pre-commit-hooks==1.4.0",
-        "pytest",
+        "mock==2.0.0"
+        "pytest==3.8.2",
+        "pytest-mock==1.10.0",
         "pytest-cov",
         "black",
     ],

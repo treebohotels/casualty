@@ -6,10 +6,16 @@ python:
 - 3.6
 
 install:
-- pip install pytest pytest-cov codecov
+- pip install pytest pytest-cov codecov structlog wrapt pre-commit-hooks black pytest-mock
 
 script:
 - pytest --cov=./
 
 after_success:
 - codecov
+
+deploy:
+  provider: pypi
+  user: ksohit
+  password:
+    secure: "Your encrypted password"
