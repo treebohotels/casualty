@@ -11,8 +11,7 @@ setup(
         "mock==2.0.0",
         "pytest==3.8.2",
         "pytest-mock==1.10.0",
-        "pytest-cov",
-        "black",
+        "pytest-cov"
     ],
     url="",
     license="MIT",
