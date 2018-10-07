@@ -12,29 +12,27 @@ def mocked_function():
     return True
 
 
-@mock.patch("uuid.uuid4")
-def test_inject_header(mock_uuid4):
+def test_inject_header(mocker):
     wrapped = Mock()
     instance = Mock()
     wrapped.__call__ = mocked_function.__call__
     args0 = {}
     kwargs = {}
     args = [args0]
-    mock_uuid4.return_value = "12345"
+    mocker.patch("uuid.uuid4", return_value="12345")
     _inject_header(wrapped, instance, args, kwargs)
 
     assert kwargs['headers'][REQUEST_HEADER] == '12345'
 
-@mock.patch("uuid.uuid4")
 
-def test_bind_request_id_on_message_receive(mock_uuid4):
+def test_bind_request_id_on_message_receive(mocker):
     wrapped = Mock()
     instance = Mock()
     wrapped.__call__ = mocked_function.__call__
     args0 = {}
     kwargs = {}
     args = [args0]
-    mock_uuid4.return_value = "12345"
+    mocker.patch("uuid.uuid4",return_value = "12345")
 
     structlog.configure(
         processors=[

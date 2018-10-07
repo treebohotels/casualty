@@ -10,15 +10,15 @@ def mocked_function():
     return True
 
 
-@mock.patch("uuid.uuid4")
-def test_inject_header(mock_uuid4):
+
+def test_inject_header(mocker):
     wrapped = Mock()
     instance = Mock()
     wrapped.__call__ = mocked_function.__call__
     request = Mock()
     request.headers = {}
     args = [request]
-    mock_uuid4.return_value = "12345"
+    mocker.patch("uuid.uuid4", return_value="12345")
     _inject_header(wrapped, instance, args, {})
     assert request.headers[REQUEST_HEADER] == '12345'
 
