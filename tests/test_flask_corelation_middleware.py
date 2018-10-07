@@ -1,23 +1,21 @@
-# from mock import Mock
-#
-# from casualty.flask_corelation_middleware import FlaskCorelationMiddleWare
-#
-#
-# def test_flask_corelation_middleware(self):
-#
-#     request = Mock()
-#     request.headers={}
-#     request.META = {
-#         "HTTP_PROFILE_ID": self.profileId,
-#         "REQUEST_METHOD": "POST",
-#         "HTTP_OPERATING_SYSTEM_VERSION": "ICE CREAM",
-#         "HTTP_PLATFORM": "ANDROID",
-#         "HTTP_APP_VERSION": "1.0.0",
-#         "HTTP_USER_AGENT": "AUTOMATED TEST"
-#     }
-#     request.path = '/testURL/'
-#     request.session = {}
-#
-#     FlaskCorelationMiddleWare()
-#
-#     print(123)
+import structlog
+from mock import Mock
+
+from casualty.constants import HTTP_REQUEST_HEADER
+from casualty.flask_corelation_middleware import FlaskCorelationMiddleWare
+
+
+def mocked_fucntion():
+    return True;
+
+
+def test_flask_corelation_middleware():
+    envoirn = {}
+    envoirn[HTTP_REQUEST_HEADER] = '12345'
+    start_reposne = Mock()
+    mocked_app = Mock()
+    mocked_app.__call__ = mocked_fucntion.__call__
+    flask_middleware = FlaskCorelationMiddleWare(mocked_app)
+    flask_middleware(envoirn, start_reposne)
+    request_id = structlog.get_config()["context_class"]._tl.dict_["request_id"]
+    assert request_id == '12345'
