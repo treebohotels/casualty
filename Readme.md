@@ -47,7 +47,7 @@ logger = logging.getLogger()
 Now:
 ```python
 import  logging
-import structlog
+from casualty import casualty_logger
 
 logger = logging.getLogger()
 logger=casualty_logger.getLogger(logger=logger)
@@ -63,7 +63,7 @@ patch(['requests','kombu'])
 
 ```python
 import logging
-import structlog
+from casualty import casualty_logger
 
 logger =logging.getLogger()
 logger=casualty_logger.getLogger(logger=logger)
@@ -83,7 +83,7 @@ patch(['requests','kombu'])
 ```
 
 ```python
-import structlog
+from casualty import casualty_logger
 import logging
 from casualty.constants import REQUEST_HEADER
 
