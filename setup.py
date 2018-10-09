@@ -14,6 +14,7 @@ setup(
         "pytest-cov"
     ],
     url="",
+    python_requires=">=2.6, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*",
     license="MIT",
     author="Sohit Kumar",
     author_email="sumitk002@gmail.com",

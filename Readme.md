@@ -1,6 +1,7 @@
 # Casualty - Logging with request identifiers
 [![image](https://img.shields.io/pypi/v/casualty.svg)](https://pypi.org/project/casualty/)
 [![image](https://img.shields.io/pypi/l/casualty.svg)](https://pypi.org/project/casualty/)
+[![image](https://img.shields.io/pypi/pyversions/casualty.svg)](https://pypi.org/project/casualty/)
 [![image](https://img.shields.io/github/contributors/treebohotels/casualty.svg)](https://github.com/treebohotels/casualty/graphs/contributors)
 [![codecov.io](https://codecov.io/github/treebohotels/casualty/coverage.svg?branch=master)](https://codecov.io/github/treebohotels/casualty)
 
