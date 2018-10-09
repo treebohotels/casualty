@@ -29,8 +29,17 @@ Three simple steps
 
 ##### Examples:
 Add the middleware and patch outgoing request modules
-For Flask
+For Flask, configure structlog if not configured default confgiuration will be picked.
 ```
+structlog.configure(
+    processors=[
+        structlog.processors.TimeStamper(fmt="ISO"),
+        structlog.processors.JSONRenderer(),
+    ],
+    context_class=structlog.threadlocal.wrap_dict(dict),
+    wrapper_class=structlog.stdlib.BoundLogger,
+    cache_logger_on_first_use=True,
+)
 app = Flask(__name__)
 app.wsgi_app = FlaskCorelationMiddleWare(app.wsgi_app)
 patch(['requests','kombu'])  # only need to patch kombu if you are using celery 
