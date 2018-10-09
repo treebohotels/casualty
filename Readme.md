@@ -28,9 +28,15 @@ Three simple steps
 
 
 ##### Examples:
-Add the middleware and patch outgoing request modules
-For Flask, configure structlog if not configured default confgiuration will be picked.
-```
+For configure a Flask application, add the middleware and patch outgoing request modules
+Override the default structlog configure as mentioned in the example below. The example also shows the default config 
+used by the library
+```python
+import structlog
+import Flask
+from casualty.flask_corelation_middleware import FlaskCorelationMiddleWare
+from casualty.patcher import patch
+
 structlog.configure(
     processors=[
         structlog.processors.TimeStamper(fmt="ISO"),
@@ -46,7 +52,8 @@ patch(['requests','kombu'])  # only need to patch kombu if you are using celery
 ```
 
 ###### See structlog documentation if you want to customize your logger
-Replace your logger with structlog logger in all files :
+Replace your logger with structlog logger in all files:
+
 Previously:
 ```python
 import logging
@@ -59,7 +66,7 @@ import  logging
 from casualty import casualty_logger
 
 logger = logging.getLogger()
-logger=casualty_logger.getLogger(logger=logger)
+logger = casualty_logger.getLogger(logger=logger)
 ```
 
 This will automatically start adding request_id to your logs and to the HTTP headers to all outbound requests.
@@ -75,7 +82,7 @@ import logging
 from casualty import casualty_logger
 
 logger =logging.getLogger()
-logger=casualty_logger.getLogger(logger=logger)
+logger = casualty_logger.getLogger(logger=logger)
 
 def process_message(body, message):
   logger.info("The body is {}".format(body))
@@ -96,8 +103,8 @@ from casualty import casualty_logger
 import logging
 from casualty.constants import REQUEST_HEADER
 
-logger=logging.getLogger()
-logger=casualty_logger.getLogger(logger=logger)
+logger = logging.getLogger()
+logger = casualty_logger.getLogger(logger=logger)
 
 @app.task(bind=True) # bind the task
 def add(self,x, y):
