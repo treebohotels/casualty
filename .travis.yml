@@ -1,9 +1,12 @@
 sudo: false
 language: python
 python:
+- 2.7
+- 3.5
 - 3.6
+
 install:
-- pip install pytest pytest-cov codecov structlog wrapt pre-commit-hooks black pytest-mock
+- pip install pytest pytest-cov codecov structlog wrapt pre-commit-hooks pytest-mock
 script:
 - pytest --cov=./
 after_success:
