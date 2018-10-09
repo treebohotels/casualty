@@ -2,6 +2,7 @@ import uuid
 
 import structlog
 
+from casualty.casualty_logger import configure_structlog
 from casualty.constants import HTTP_REQUEST_HEADER
 
 
@@ -14,15 +15,8 @@ class FlaskCorelationMiddleWare(object):
 
     def __init__(self, app):
         self.app = app
-        structlog.configure(
-            processors=[
-                structlog.processors.TimeStamper(fmt="ISO"),
-                structlog.processors.JSONRenderer(),
-            ],
-            context_class=structlog.threadlocal.wrap_dict(dict),
-            wrapper_class=structlog.stdlib.BoundLogger,
-            cache_logger_on_first_use=True,
-        )
+        if not structlog.is_configured():
+            configure_structlog()
 
     def __call__(self, environ, start_response):
 
