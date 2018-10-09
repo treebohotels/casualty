@@ -14,6 +14,7 @@ class DjangoCorelationMiddleware(object):
     """
 
     def __init__(self, get_response):
+        self.get_response = get_response
         if not structlog.is_configured():
             configure_structlog()
 

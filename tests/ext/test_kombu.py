@@ -1,11 +1,8 @@
-from unittest import mock
-
 import structlog
 from mock import Mock
 
 from casualty.constants import REQUEST_HEADER
-from casualty.ext.kombu.patch import _inject_header, _bind_request_id_on_message_receive, \
-    _initialize_structlog_configuration
+from casualty.ext.kombu.patch import _inject_header, _bind_request_id_on_message_receive
 
 
 def mocked_function():
@@ -32,7 +29,7 @@ def test_bind_request_id_on_message_receive(mocker):
     args0 = {}
     kwargs = {}
     args = [args0]
-    mocker.patch("uuid.uuid4",return_value = "12345")
+    mocker.patch("uuid.uuid4", return_value="12345")
 
     structlog.configure(
         processors=[

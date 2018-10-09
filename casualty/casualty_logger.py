@@ -13,6 +13,7 @@ def getLogger(logger=None):
     logger = structlog.wrap_logger(logger=logger)
     return logger
 
+
 def configure_structlog():
     """
     default configuration for structlog if not specified during initialization

@@ -1,5 +1,3 @@
-from unittest import mock
-
 from mock import Mock
 
 from casualty.constants import REQUEST_HEADER
@@ -8,7 +6,6 @@ from casualty.ext.requests.patch import _inject_header
 
 def mocked_function():
     return True
-
 
 
 def test_inject_header(mocker):
