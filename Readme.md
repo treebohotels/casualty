@@ -47,10 +47,10 @@ logger = logging.getLogger()
 Now:
 ```python
 import  logging
-import structlog
+from casualty import casualty_logger
 
 logger = logging.getLogger()
-logger = structlog.wrap_logger(logger=logger)
+logger=casualty_logger.getLogger(logger=logger)
 ```
 
 This will automatically start adding request_id to your logs and to the HTTP headers to all outbound requests.
@@ -63,10 +63,10 @@ patch(['requests','kombu'])
 
 ```python
 import logging
-import structlog
+from casualty import casualty_logger
 
 logger =logging.getLogger()
-logger = structlog.wrap_logger(logger=logger)
+logger=casualty_logger.getLogger(logger=logger)
 
 def process_message(body, message):
   logger.info("The body is {}".format(body))
@@ -83,21 +83,12 @@ patch(['requests','kombu'])
 ```
 
 ```python
-import structlog
+from casualty import casualty_logger
 import logging
-
-structlog.configure(
-        processors=[
-            structlog.processors.TimeStamper(fmt="ISO"),
-            structlog.processors.JSONRenderer(),
-        ],
-        context_class=structlog.threadlocal.wrap_dict(dict),
-        wrapper_class=structlog.stdlib.BoundLogger,
-        cache_logger_on_first_use=True,
-    )
+from casualty.constants import REQUEST_HEADER
 
 logger=logging.getLogger()
-logger = structlog.wrap_logger(logger=logger)
+logger=casualty_logger.getLogger(logger=logger)
 
 @app.task(bind=True) # bind the task
 def add(self,x, y):
