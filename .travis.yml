@@ -6,7 +6,7 @@ python:
 - 3.6
 
 install:
-- pip install pytest pytest-cov codecov structlog wrapt pre-commit-hooks pytest-mock
+- pip install pytest==3.8.2 pytest-cov codecov structlog wrapt pre-commit-hooks pytest-mock
 script:
 - pytest --cov=./
 after_success:
