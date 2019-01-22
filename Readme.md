@@ -54,17 +54,10 @@ patch(['requests','kombu'])  # only need to patch kombu if you are using celery
 
 ###### See structlog documentation if you want to customize your logger
 Replace your logger with structlog logger in all files:
+Add filter to you loggers which will add requets id to all your requests
 
-Previously:
-```python
-import logging
+```casualty.filter.RequestIDFilter```
 
-logger = logging.getLogger()
-```
-Now:
-```python
-import  logging
-from casualty import casualty_logger
 
 logger = logging.getLogger()
 logger = casualty_logger.getLogger(logger=logger)
