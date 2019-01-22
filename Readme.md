@@ -58,11 +58,6 @@ Add filter to you loggers which will add requets id to all your requests
 
 ```casualty.filter.RequestIDFilter```
 
-```
-logger = logging.getLogger()
-logger = casualty_logger.getLogger(logger=logger)
-```
-
 This will automatically start adding request_id to your logs and to the HTTP headers to all outbound requests.
 
 For Kombu consumers, patch Kombu and use structlog as below
@@ -76,7 +71,6 @@ import logging
 from casualty import casualty_logger
 
 logger =logging.getLogger()
-logger = casualty_logger.getLogger(logger=logger)
 
 def process_message(body, message):
   logger.info("The body is {}".format(body))
@@ -98,7 +92,6 @@ import logging
 from casualty.constants import REQUEST_HEADER
 
 logger = logging.getLogger()
-logger = casualty_logger.getLogger(logger=logger)
 
 @app.task(bind=True) # bind the task
 def add(self,x, y):
