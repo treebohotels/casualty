@@ -58,7 +58,7 @@ Add filter to you loggers which will add requets id to all your requests
 
 ```casualty.filter.RequestIDFilter```
 
-
+```
 logger = logging.getLogger()
 logger = casualty_logger.getLogger(logger=logger)
 ```
