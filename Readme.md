@@ -61,6 +61,7 @@ Add filter to you loggers which will add requets id to all your requests
 This will automatically start adding request_id to your logs and to the HTTP headers to all outbound requests.
 
 For Kombu consumers, patch Kombu and use structlog as below
+
 ```python
 from casualty.patcher import patch 
 patch(['requests','kombu']) 
@@ -99,5 +100,6 @@ def add(self,x, y):
     logger = logger.bind(request_id=self.request.__dict__[REQUEST_HEADER])
     return x,y
 ```
+
 
 
