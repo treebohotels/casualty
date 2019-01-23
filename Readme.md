@@ -43,10 +43,9 @@ patch(['requests']) .
 patch fucntion  will automatically start adding request_id to the HTTP headers of all outbound requests.
 
 
-#For Django Application ad middleware and patch request,kombu .
+#For Django Application ad middleware and patch request,kombu during app initialization
 MIDDLEWARE = [
-    'casualty.django_corelation_middleware.DjangoCorelationMiddleware'
-   
+    'casualty.django_corelation_middleware.DjangoCorelationMiddleware' . #Use DjangoCorelationOldMiddleware for older style of Django middleware
 ]
 
 
@@ -63,11 +62,13 @@ Something like this.
         },
         ... Your code
 
-For Kombu consumers, patch Kombu and use structlog as below
+For Kombu consumers, patch Kombu during app initialization
 
+```python
 from casualty.patcher import patch 
 patch(['requests','kombu']) 
 ```
+
 
 ```python
 import logging
