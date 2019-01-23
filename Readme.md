@@ -40,12 +40,20 @@ app = Flask(__name__)
 app.wsgi_app = FlaskCorelationMiddleWare(app.wsgi_app)
 patch(['requests']) .
 
-patch command  will automatically start adding request_id to your logs and to the HTTP headers to all outbound requests.
+patch fucntion  will automatically start adding request_id to the HTTP headers of all outbound requests.
 
 ######
+For Django Application ad middleware and patch request,kombu .
+MIDDLEWARE = [
+    'casualty.django_corelation_middleware.DjangoCorelationMiddleware'
+   
+]
+
+
+
 Add below filter 
 ```casualty.filter.RequestIDFilter```
-to your loggers which will add requets id to all your requests.
+to your loggers which will add requets id to all your logs.
 Something like this.
 ```
     logging_conf = {
@@ -55,9 +63,6 @@ Something like this.
         },
         ... Your code
 ```
-
-
-
 For Kombu consumers, patch Kombu and use structlog as below
 
 ```python
