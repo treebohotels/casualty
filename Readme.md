@@ -29,35 +29,31 @@ Three simple steps
 
 
 ##### Examples:
-For configure a Flask application, add the middleware and patch outgoing request modules
-Override the default structlog configure as mentioned in the example below. The example also shows the default config 
-used by the library
+For configure a Flask application, add the middleware and patch outgoing request modules.
 ```python
-import structlog
 import Flask
 from casualty.flask_corelation_middleware import FlaskCorelationMiddleWare
 from casualty.patcher import patch
 
-structlog.configure(
-    processors=[
-        structlog.processors.TimeStamper(fmt="ISO"),
-        structlog.processors.JSONRenderer(),
-    ],
-    context_class=structlog.threadlocal.wrap_dict(dict),
-    wrapper_class=structlog.stdlib.BoundLogger,
-    cache_logger_on_first_use=True,
-)
+
 app = Flask(__name__)
 app.wsgi_app = FlaskCorelationMiddleWare(app.wsgi_app)
-patch(['requests','kombu'])  # only need to patch kombu if you are using celery 
-```
+patch(['requests'])
 
-###### See structlog documentation if you want to customize your logger
-Replace your logger with structlog logger in all files:
-Add filter to you loggers which will add requets id to all your requests
-
+######
+Add below filter 
 ```casualty.filter.RequestIDFilter```
-
+to your loggers which will add requets id to all your requests.
+Something like this.
+```
+    logging_conf = {
+        "version": 1,
+        "filters": {
+            "request_id": {"()": "casualty.filter.RequestIDFilter"}
+        },
+        ... Your code
+```
+Do the same where the request is received if you want to log the request id except the patching part.
 This will automatically start adding request_id to your logs and to the HTTP headers to all outbound requests.
 
 For Kombu consumers, patch Kombu and use structlog as below
