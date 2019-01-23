@@ -38,7 +38,9 @@ from casualty.patcher import patch
 
 app = Flask(__name__)
 app.wsgi_app = FlaskCorelationMiddleWare(app.wsgi_app)
-patch(['requests'])
+patch(['requests']) .
+
+patch command  will automatically start adding request_id to your logs and to the HTTP headers to all outbound requests.
 
 ######
 Add below filter 
@@ -53,8 +55,8 @@ Something like this.
         },
         ... Your code
 ```
-Do the same where the request is received if you want to log the request id except the patching part.
-This will automatically start adding request_id to your logs and to the HTTP headers to all outbound requests.
+
+
 
 For Kombu consumers, patch Kombu and use structlog as below
 
