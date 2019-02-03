@@ -62,7 +62,7 @@ Something like this.
         },
         ... Your code
 
-For Kombu consumers, patch Kombu during app initialization
+For Kombu consumers, patch Kombu during app initialization and add RequestIdfilter to your logs
 
 ```python
 from casualty.patcher import patch 
@@ -81,7 +81,7 @@ def process_message(body, message):
   message.ack()
 ```
 
-For Celery consumer, note that we will need to bind the request_id 
+For Celery consumer, note that we will need to bind the request_id and add RequestIdfilter to your logs
 
 ```python
 from casualty.patcher import patch 
