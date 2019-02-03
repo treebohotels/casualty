@@ -72,7 +72,6 @@ patch(['requests','kombu'])
 
 ```python
 import logging
-from casualty import casualty_logger
 
 logger =logging.getLogger()
 
@@ -95,13 +94,14 @@ from casualty import casualty_logger
 import logging
 from casualty.constants import REQUEST_HEADER
 
-base_logger = logging.getLogger()
-logger=casualty_logger.getLogger(base_logger)
+logger = logging.getLogger()
+casualty_logger=casualty_logger.getLogger()
 
 @app.task(bind=True) # bind the task
 def add(self,x, y):
-    global logger
-    logger = logger.bind(request_id=self.request.__dict__[REQUEST_HEADER])
+    #bind the requeest id to casualty .
+    global casualty_logger
+    casualty_logger = casualty_logger.bind(request_id=self.request.__dict__[REQUEST_HEADER])
     return x,y
 ```
 
