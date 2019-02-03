@@ -82,7 +82,7 @@ def process_message(body, message):
   message.ack()
 ```
 
-For Celery consumer, note that we will need to initialize structlog as well as bind the request_id 
+For Celery consumer, note that we will need to bind the request_id 
 
 ```python
 from casualty.patcher import patch 
@@ -95,7 +95,8 @@ from casualty import casualty_logger
 import logging
 from casualty.constants import REQUEST_HEADER
 
-logger = logging.getLogger()
+base_logger = logging.getLogger()
+logger=casualty_logger.getLogger(base_logger)
 
 @app.task(bind=True) # bind the task
 def add(self,x, y):
